@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, SearchWrapper } from './style.js';
+import { CSSTransition } from 'react-transition-group';
 
 class Header extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      focused: false
+    }
+    this.handleInputFocus = this.handleInputFocus.bind(this);
+    this.handleInputBlur = this.handleInputBlur.bind(this);
+  }
   render() {
     return (
       <HeaderWrapper>
@@ -16,9 +25,19 @@ class Header extends Component {
             </svg>
           </NavItem>
           <SearchWrapper>
-            <NavSearch>
-            </NavSearch>
-            <svg className="icon">
+            <CSSTransition
+              in={this.state.focused}
+              timeout={200}
+              classNames="slide"
+            >
+              <NavSearch
+                className={this.state.focused ? 'focused' : ''}
+                onFocus={this.handleInputFocus}
+                onBlur={this.handleInputBlur}
+              >
+              </NavSearch>
+            </CSSTransition>
+            <svg className={this.state.focused ? 'icon focused' : 'icon'}>
               <use xlinkHref="#icon-magnifier"></use>
             </svg>
           </SearchWrapper>
@@ -34,6 +53,16 @@ class Header extends Component {
         </Addition>
       </HeaderWrapper>
     );
+  }
+  handleInputFocus() {
+    this.setState({
+      focused: true
+    })
+  }
+  handleInputBlur() {
+    this.setState({
+      focused: false
+    })
   }
 }
 
