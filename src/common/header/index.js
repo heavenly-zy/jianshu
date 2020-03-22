@@ -2,6 +2,7 @@ import React from 'react';
 import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, SearchWrapper } from './style.js';
 import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
+import { actionCreators } from './store';
 
 const Header = (props) => {
   return (
@@ -55,16 +56,10 @@ const mapStateToProps = (state) => { // store => props
 const mapDispatchToProps = (dispatch) => { // 组件通过 dispatch 改变 store 中的数据
   return {
     handleInputFocus() { // this.props.handleInputFocus => store
-      const action = {
-        type: 'search_focus'
-      }
-      dispatch(action);
+      dispatch(actionCreators.searchFocus());
     },
     handleInputBlur() { // this.props.handleInputBlur => store
-      const action = {
-        type: 'search_blur'
-      }
-      dispatch(action);
+      dispatch(actionCreators.searchBlur());
     }
   }
 }
