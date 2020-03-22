@@ -50,7 +50,7 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => { // store => props
   return {
-    focused: state.header.focused // store.state.focused => this.props.focused
+    focused: state.header.get('focused') // store.state.focused => this.props.focused
   }
 }
 const mapDispatchToProps = (dispatch) => { // 组件通过 dispatch 改变 store 中的数据
