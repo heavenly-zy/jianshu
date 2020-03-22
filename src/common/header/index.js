@@ -1,52 +1,50 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, SearchWrapper } from './style.js';
 import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
 
-class Header extends Component {
-  render() {
-    return (
-      <HeaderWrapper>
-        <Logo />
-        <Nav>
-          <NavItem className="left">首页</NavItem>
-          <NavItem className="left">下载App</NavItem>
-          <NavItem className="right">登录</NavItem>
-          <NavItem className="right">
-            <svg className="icon">
-              <use xlinkHref="#icon-typeface"></use>
-            </svg>
-          </NavItem>
-          <SearchWrapper>
-            <CSSTransition
-              in={this.props.focused}
-              timeout={200}
-              classNames="slide"
+const Header = (props) => {
+  return (
+    <HeaderWrapper>
+      <Logo />
+      <Nav>
+        <NavItem className="left">首页</NavItem>
+        <NavItem className="left">下载App</NavItem>
+        <NavItem className="right">登录</NavItem>
+        <NavItem className="right">
+          <svg className="icon">
+            <use xlinkHref="#icon-typeface"></use>
+          </svg>
+        </NavItem>
+        <SearchWrapper>
+          <CSSTransition
+            in={props.focused}
+            timeout={200}
+            classNames="slide"
+          >
+            <NavSearch
+              className={props.focused ? 'focused' : ''}
+              onFocus={props.handleInputFocus}
+              onBlur={props.handleInputBlur}
             >
-              <NavSearch
-                className={this.props.focused ? 'focused' : ''}
-                onFocus={this.props.handleInputFocus}
-                onBlur={this.props.handleInputBlur}
-              >
-              </NavSearch>
-            </CSSTransition>
-            <svg className={this.props.focused ? 'icon focused' : 'icon'}>
-              <use xlinkHref="#icon-magnifier"></use>
-            </svg>
-          </SearchWrapper>
-        </Nav>
-        <Addition>
-          <Button className="writting">
-            <svg className="icon">
-              <use xlinkHref="#icon-pen"></use>
-            </svg>
-            <span>写文章</span>
-          </Button>
-          <Button className="register">注册</Button>
-        </Addition>
-      </HeaderWrapper>
-    );
-  }
+            </NavSearch>
+          </CSSTransition>
+          <svg className={props.focused ? 'icon focused' : 'icon'}>
+            <use xlinkHref="#icon-magnifier"></use>
+          </svg>
+        </SearchWrapper>
+      </Nav>
+      <Addition>
+        <Button className="writting">
+          <svg className="icon">
+            <use xlinkHref="#icon-pen"></use>
+          </svg>
+          <span>写文章</span>
+        </Button>
+        <Button className="register">注册</Button>
+      </Addition>
+    </HeaderWrapper>
+  );
 }
 
 const mapStateToProps = (state) => { // store => props
