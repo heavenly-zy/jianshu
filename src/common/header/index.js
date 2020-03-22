@@ -17,7 +17,7 @@ import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { actionCreators } from './store';
 
-const showSearchInfo = (show) => {
+const showSearchInfo = (show, props) => {
   if (show) {
     return (
       <SearchInfo>
@@ -27,12 +27,11 @@ const showSearchInfo = (show) => {
             <span>换一批</span>
           </SearchInfoSwitch>
         </SearchInfoTitle>
-        <SearchInfoItem>教育</SearchInfoItem>
-        <SearchInfoItem>教育</SearchInfoItem>
-        <SearchInfoItem>教育</SearchInfoItem>
-        <SearchInfoItem>教育</SearchInfoItem>
-        <SearchInfoItem>教育</SearchInfoItem>
-        <SearchInfoItem>教育</SearchInfoItem>
+        {
+          props.list.map((item) => {
+            return <SearchInfoItem key={item}>{item}</SearchInfoItem>
+          })
+        }
       </SearchInfo>
     )
   } else {
@@ -69,7 +68,7 @@ const Header = (props) => {
           <svg className={props.focused ? 'icon focused' : 'icon'}>
             <use xlinkHref="#icon-magnifier"></use>
           </svg>
-          {showSearchInfo(props.focused)}
+          {showSearchInfo(props.focused, props)}
         </SearchWrapper>
       </Nav>
       <Addition>
@@ -87,15 +86,17 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => { // store => props
   return {
-    focused: state.getIn(['header', 'focused']) // store.state.focused => this.props.focused
+    focused: state.getIn(['header', 'focused']), // store.state.focused => this.props.focused
     // 等价于 state.get('header').get('focused')
     // 统一格式为 immutable 对象
+    list: state.getIn(['header', 'list'])
   }
 }
 const mapDispatchToProps = (dispatch) => { // 组件通过 dispatch 改变 store 中的数据
   return {
     handleInputFocus() { // this.props.handleInputFocus => store
       dispatch(actionCreators.searchFocus());
+      dispatch(actionCreators.getList());
     },
     handleInputBlur() { // this.props.handleInputBlur => store
       dispatch(actionCreators.searchBlur());
