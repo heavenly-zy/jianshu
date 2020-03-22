@@ -50,7 +50,9 @@ const Header = (props) => {
 
 const mapStateToProps = (state) => { // store => props
   return {
-    focused: state.header.get('focused') // store.state.focused => this.props.focused
+    focused: state.getIn(['header', 'focused']) // store.state.focused => this.props.focused
+    // 等价于 state.get('header').get('focused')
+    // 统一格式为 immutable 对象
   }
 }
 const mapDispatchToProps = (dispatch) => { // 组件通过 dispatch 改变 store 中的数据
