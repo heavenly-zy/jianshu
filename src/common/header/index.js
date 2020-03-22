@@ -1,16 +1,9 @@
 import React, { Component } from 'react';
 import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, SearchWrapper } from './style.js';
 import { CSSTransition } from 'react-transition-group';
+import { connect } from 'react-redux';
 
 class Header extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      focused: false
-    }
-    this.handleInputFocus = this.handleInputFocus.bind(this);
-    this.handleInputBlur = this.handleInputBlur.bind(this);
-  }
   render() {
     return (
       <HeaderWrapper>
@@ -26,18 +19,18 @@ class Header extends Component {
           </NavItem>
           <SearchWrapper>
             <CSSTransition
-              in={this.state.focused}
+              in={this.props.focused}
               timeout={200}
               classNames="slide"
             >
               <NavSearch
-                className={this.state.focused ? 'focused' : ''}
-                onFocus={this.handleInputFocus}
-                onBlur={this.handleInputBlur}
+                className={this.props.focused ? 'focused' : ''}
+                onFocus={this.props.handleInputFocus}
+                onBlur={this.props.handleInputBlur}
               >
               </NavSearch>
             </CSSTransition>
-            <svg className={this.state.focused ? 'icon focused' : 'icon'}>
+            <svg className={this.props.focused ? 'icon focused' : 'icon'}>
               <use xlinkHref="#icon-magnifier"></use>
             </svg>
           </SearchWrapper>
@@ -54,16 +47,28 @@ class Header extends Component {
       </HeaderWrapper>
     );
   }
-  handleInputFocus() {
-    this.setState({
-      focused: true
-    })
+}
+
+const mapStateToProps = (state) => { // store => props
+  return {
+    focused: state.focused // store.state.focused => this.props.focused
   }
-  handleInputBlur() {
-    this.setState({
-      focused: false
-    })
+}
+const mapDispatchToProps = (dispatch) => { // 组件通过 dispatch 改变 store 中的数据
+  return {
+    handleInputFocus() { // this.props.handleInputFocus => store
+      const action = {
+        type: 'search_focus'
+      }
+      dispatch(action);
+    },
+    handleInputBlur() { // this.props.handleInputBlur => store
+      const action = {
+        type: 'search_blur'
+      }
+      dispatch(action);
+    }
   }
 }
 
-export default Header;
+export default connect(mapStateToProps, mapDispatchToProps)(Header); // Header 组件与 store 建立连接
