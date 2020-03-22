@@ -1,8 +1,44 @@
 import React from 'react';
-import { HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button, SearchWrapper } from './style.js';
+import {
+  HeaderWrapper,
+  Logo,
+  Nav,
+  NavItem,
+  NavSearch,
+  Addition,
+  Button,
+  SearchWrapper,
+  SearchInfo,
+  SearchInfoTitle,
+  SearchInfoSwitch,
+  SearchInfoItem
+} from './style.js';
 import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { actionCreators } from './store';
+
+const showSearchInfo = (show) => {
+  if (show) {
+    return (
+      <SearchInfo>
+        <SearchInfoTitle>
+          <span>热门搜索</span>
+          <SearchInfoSwitch>
+            <span>换一批</span>
+          </SearchInfoSwitch>
+        </SearchInfoTitle>
+        <SearchInfoItem>教育</SearchInfoItem>
+        <SearchInfoItem>教育</SearchInfoItem>
+        <SearchInfoItem>教育</SearchInfoItem>
+        <SearchInfoItem>教育</SearchInfoItem>
+        <SearchInfoItem>教育</SearchInfoItem>
+        <SearchInfoItem>教育</SearchInfoItem>
+      </SearchInfo>
+    )
+  } else {
+    return null;
+  }
+}
 
 const Header = (props) => {
   return (
@@ -33,6 +69,7 @@ const Header = (props) => {
           <svg className={props.focused ? 'icon focused' : 'icon'}>
             <use xlinkHref="#icon-magnifier"></use>
           </svg>
+          {showSearchInfo(props.focused)}
         </SearchWrapper>
       </Nav>
       <Addition>
