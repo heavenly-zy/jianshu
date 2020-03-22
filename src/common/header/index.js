@@ -17,8 +17,9 @@ import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { actionCreators } from './store';
 
-const showSearchInfo = (show, props) => {
-  if (show) {
+const showSearchInfo = (props) => {
+  const { focused, list } = props
+  if (focused) {
     return (
       <SearchInfo>
         <SearchInfoTitle>
@@ -28,7 +29,7 @@ const showSearchInfo = (show, props) => {
           </SearchInfoSwitch>
         </SearchInfoTitle>
         {
-          props.list.map((item) => {
+          list.map((item) => {
             return <SearchInfoItem key={item}>{item}</SearchInfoItem>
           })
         }
@@ -40,6 +41,7 @@ const showSearchInfo = (show, props) => {
 }
 
 const Header = (props) => {
+  const { focused, handleInputFocus, handleInputBlur } = props
   return (
     <HeaderWrapper>
       <Logo />
@@ -54,21 +56,21 @@ const Header = (props) => {
         </NavItem>
         <SearchWrapper>
           <CSSTransition
-            in={props.focused}
+            in={focused}
             timeout={200}
             classNames="slide"
           >
             <NavSearch
-              className={props.focused ? 'focused' : ''}
-              onFocus={props.handleInputFocus}
-              onBlur={props.handleInputBlur}
+              className={focused ? 'focused' : ''}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
             >
             </NavSearch>
           </CSSTransition>
-          <svg className={props.focused ? 'icon focused' : 'icon'}>
+          <svg className={focused ? 'icon focused' : 'icon'}>
             <use xlinkHref="#icon-magnifier"></use>
           </svg>
-          {showSearchInfo(props.focused, props)}
+          {showSearchInfo(props)}
         </SearchWrapper>
       </Nav>
       <Addition>
