@@ -52,7 +52,7 @@ const showSearchInfo = (props) => {
 }
 
 const Header = (props) => {
-  const { focused, handleInputFocus, handleInputBlur } = props
+  const { focused, list, handleInputFocus, handleInputBlur } = props
   return (
     <HeaderWrapper>
       <Logo />
@@ -73,7 +73,7 @@ const Header = (props) => {
           >
             <NavSearch
               className={focused ? 'focused' : ''}
-              onFocus={handleInputFocus}
+              onFocus={() => { handleInputFocus(list) }}
               onBlur={handleInputBlur}
             >
             </NavSearch>
@@ -111,9 +111,9 @@ const mapStateToProps = (state) => { // store => props
 }
 const mapDispatchToProps = (dispatch) => { // 组件通过 dispatch 改变 store 中的数据
   return {
-    handleInputFocus() { // this.props.handleInputFocus => store
+    handleInputFocus(list) { // this.props.handleInputFocus => store
       dispatch(actionCreators.searchFocus());
-      dispatch(actionCreators.getList());
+      (list.toJS().length === 0) && dispatch(actionCreators.getList());
     },
     handleInputBlur() { // this.props.handleInputBlur => store
       dispatch(actionCreators.searchBlur());
