@@ -3,7 +3,8 @@ import { fromJS } from 'immutable';
 
 const defaultState = fromJS({ // 把 state 对象转变为 immutable 对象（不可变更的对象）
   focused: false,
-  list: []
+  list: [],
+  mouseIn: false
 });
 
 export default (state = defaultState, action) => {
@@ -14,6 +15,10 @@ export default (state = defaultState, action) => {
       return state.set('focused', false);
     case actionType.CHANGE_LIST:
       return state.set('list', action.data);
+    case actionType.MOUSE_ENTER:
+      return state.set('mouseIn', true);
+    case actionType.MOUSE_LEAVE:
+      return state.set('mouseIn', false);
     default:
       return state;
   }

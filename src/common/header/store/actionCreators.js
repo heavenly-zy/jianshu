@@ -15,6 +15,14 @@ export const searchBlur = () => ({
   type: actionType.SEARCH_BLUR
 });
 
+export const mouseEnter = () => ({
+  type: actionType.MOUSE_ENTER
+});
+
+export const mouseLeave = () => ({
+  type: actionType.MOUSE_LEAVE
+});
+
 export const getList = () => {
   return (dispatch) => { // 使用 redux-thunk 中间件才能返回函数
     axios.get('/api/headerList.json')

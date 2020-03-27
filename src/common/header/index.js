@@ -18,10 +18,13 @@ import { connect } from 'react-redux';
 import { actionCreators } from './store';
 
 const showSearchInfo = (props) => {
-  const { focused, list } = props
-  if (focused) {
+  const { focused, list, mouseIn, handleMouseEnter, handleMouseLeave } = props
+  if (focused || mouseIn) { // 由 focused 和 mouseIn 共同来控制是否显示该区域
     return (
-      <SearchInfo>
+      <SearchInfo
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <SearchInfoTitle>
           <span>热门搜索</span>
           <SearchInfoSwitch>
@@ -91,7 +94,8 @@ const mapStateToProps = (state) => { // store => props
     focused: state.getIn(['header', 'focused']), // store.state.focused => this.props.focused
     // 等价于 state.get('header').get('focused')
     // 统一格式为 immutable 对象
-    list: state.getIn(['header', 'list'])
+    list: state.getIn(['header', 'list']),
+    mouseIn: state.getIn(['header', 'mouseIn'])
   }
 }
 const mapDispatchToProps = (dispatch) => { // 组件通过 dispatch 改变 store 中的数据
@@ -102,6 +106,12 @@ const mapDispatchToProps = (dispatch) => { // 组件通过 dispatch 改变 store
     },
     handleInputBlur() { // this.props.handleInputBlur => store
       dispatch(actionCreators.searchBlur());
+    },
+    handleMouseEnter() {
+      dispatch(actionCreators.mouseEnter());
+    },
+    handleMouseLeave() {
+      dispatch(actionCreators.mouseLeave());
     }
   }
 }
