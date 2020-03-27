@@ -29,6 +29,11 @@ export const changePage = (page) => ({
   page
 });
 
+export const iconActive = (spinIconActive) => ({
+  type: actionType.ICON_ACTIVE,
+  spinIconActive
+});
+
 export const getList = () => {
   return (dispatch) => { // 使用 redux-thunk 中间件才能返回函数
     axios.get('/api/headerList.json')

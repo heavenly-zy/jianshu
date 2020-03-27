@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from './store';
 
 const showSearchInfo = (props) => {
-  const { focused, list, mouseIn, currentPage, totalPages, handleMouseEnter, handleMouseLeave, handleChangePage } = props;
+  const { focused, list, mouseIn, currentPage, spinIconActive, totalPages, handleMouseEnter, handleMouseLeave, handleChangePage } = props;
   const newList = list.toJS(); // 这一步是为了把 immutable 的 list 转化为普通 JS 的 list
   const pageList = [];
   for (let i = currentPage * 10; i < (currentPage + 1) * 10; i++) {
@@ -36,7 +36,10 @@ const showSearchInfo = (props) => {
       >
         <SearchInfoTitle>
           <span>热门搜索</span>
-          <SearchInfoSwitch onClick={() => { handleChangePage(currentPage, totalPages) }}>
+          <SearchInfoSwitch onClick={() => { handleChangePage(currentPage, totalPages, spinIconActive) }}>
+            <svg className={spinIconActive ? 'icon active' : 'icon'}>
+              <use xlinkHref="#icon-spin"></use>
+            </svg>
             <span>换一批</span>
           </SearchInfoSwitch>
         </SearchInfoTitle>
@@ -75,7 +78,7 @@ const Header = (props) => {
             >
             </NavSearch>
           </CSSTransition>
-          <svg className={focused ? 'icon focused' : 'icon'}>
+          <svg className={focused ? 'icon focused zoom' : 'icon zoom'}>
             <use xlinkHref="#icon-magnifier"></use>
           </svg>
           {showSearchInfo(props)}
@@ -103,6 +106,7 @@ const mapStateToProps = (state) => { // store => props
     mouseIn: state.getIn(['header', 'mouseIn']),
     currentPage: state.getIn(['header', 'currentPage']),
     totalPages: state.getIn(['header', 'totalPages']),
+    spinIconActive: state.getIn(['header', 'spinIconActive']),
   }
 }
 const mapDispatchToProps = (dispatch) => { // 组件通过 dispatch 改变 store 中的数据
@@ -120,7 +124,9 @@ const mapDispatchToProps = (dispatch) => { // 组件通过 dispatch 改变 store
     handleMouseLeave() {
       dispatch(actionCreators.mouseLeave());
     },
-    handleChangePage(currentPage, totalPages) {
+    handleChangePage(currentPage, totalPages, spinIconActive) {
+      spinIconActive = !spinIconActive
+      dispatch(actionCreators.iconActive(spinIconActive));
       if (currentPage < (totalPages - 1)) {
         dispatch(actionCreators.changePage(currentPage + 1)); // 注意：currentPage !== 3
       } else {

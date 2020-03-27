@@ -6,7 +6,8 @@ const defaultState = fromJS({ // 把 state 对象转变为 immutable 对象（�
   list: [],
   mouseIn: false,
   currentPage: 0,
-  totalPages: 1
+  totalPages: 1,
+  spinIconActive: false
 });
 
 export default (state = defaultState, action) => {
@@ -26,6 +27,8 @@ export default (state = defaultState, action) => {
       return state.set('mouseIn', false);
     case actionType.CHANGE_PAGE:
       return state.set('currentPage', action.page);
+    case actionType.ICON_ACTIVE:
+      return state.set('spinIconActive', action.spinIconActive);
     default:
       return state;
   }
