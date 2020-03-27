@@ -18,7 +18,16 @@ import { connect } from 'react-redux';
 import { actionCreators } from './store';
 
 const showSearchInfo = (props) => {
-  const { focused, list, mouseIn, handleMouseEnter, handleMouseLeave } = props
+  const { focused, list, mouseIn, currentPage, totalPages, handleMouseEnter, handleMouseLeave, handleChangePage } = props;
+  const newList = list.toJS(); // 这一步是为了把 immutable 的 list 转化为普通 JS 的 list
+  const pageList = [];
+  for (let i = currentPage * 10; i < (currentPage + 1) * 10; i++) {
+    if (newList[i]) { // 保证每一项不为空
+      pageList.push(
+        <SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
+      )
+    }
+  };
   if (focused || mouseIn) { // 由 focused 和 mouseIn 共同来控制是否显示该区域
     return (
       <SearchInfo
@@ -27,15 +36,11 @@ const showSearchInfo = (props) => {
       >
         <SearchInfoTitle>
           <span>热门搜索</span>
-          <SearchInfoSwitch>
+          <SearchInfoSwitch onClick={() => { handleChangePage(currentPage, totalPages) }}>
             <span>换一批</span>
           </SearchInfoSwitch>
         </SearchInfoTitle>
-        {
-          list.map((item) => {
-            return <SearchInfoItem key={item}>{item}</SearchInfoItem>
-          })
-        }
+        {pageList}
       </SearchInfo>
     )
   } else {
@@ -95,7 +100,9 @@ const mapStateToProps = (state) => { // store => props
     // 等价于 state.get('header').get('focused')
     // 统一格式为 immutable 对象
     list: state.getIn(['header', 'list']),
-    mouseIn: state.getIn(['header', 'mouseIn'])
+    mouseIn: state.getIn(['header', 'mouseIn']),
+    currentPage: state.getIn(['header', 'currentPage']),
+    totalPages: state.getIn(['header', 'totalPages']),
   }
 }
 const mapDispatchToProps = (dispatch) => { // 组件通过 dispatch 改变 store 中的数据
@@ -112,6 +119,13 @@ const mapDispatchToProps = (dispatch) => { // 组件通过 dispatch 改变 store
     },
     handleMouseLeave() {
       dispatch(actionCreators.mouseLeave());
+    },
+    handleChangePage(currentPage, totalPages) {
+      if (currentPage < (totalPages - 1)) {
+        dispatch(actionCreators.changePage(currentPage + 1)); // 注意：currentPage !== 3
+      } else {
+        dispatch(actionCreators.changePage(0));
+      }
     }
   }
 }

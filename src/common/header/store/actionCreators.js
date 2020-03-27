@@ -4,7 +4,8 @@ import { fromJS } from 'immutable';
 
 const changeList = (data) => ({
   type: actionType.CHANGE_LIST,
-  data: fromJS(data)
+  data: fromJS(data),
+  totalPages: Math.ceil(data.length / 10)
 })
 
 export const searchFocus = () => ({
@@ -21,6 +22,11 @@ export const mouseEnter = () => ({
 
 export const mouseLeave = () => ({
   type: actionType.MOUSE_LEAVE
+});
+
+export const changePage = (page) => ({
+  type: actionType.CHANGE_PAGE,
+  page
 });
 
 export const getList = () => {
