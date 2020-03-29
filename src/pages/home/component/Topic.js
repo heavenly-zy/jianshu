@@ -1,45 +1,29 @@
 import React, { Component } from 'react';
 import { TopicWrapper, TopicItem } from '../style';
+import { connect } from 'react-redux';
 
 class Topic extends Component {
   render() {
+    const { list } = this.props;
     return (
       <TopicWrapper>
-        <TopicItem>
-          <div className="topic-pic"></div>
-          <span>社会热点</span>
-        </TopicItem>
-        <TopicItem>
-          <div className="topic-pic"></div>
-          <span>社会热点</span>
-        </TopicItem>
-        <TopicItem>
-          <div className="topic-pic"></div>
-          <span>社会热点</span>
-        </TopicItem>
-        <TopicItem>
-          <div className="topic-pic"></div>
-          <span>社会热点</span>
-        </TopicItem>
-        <TopicItem>
-          <div className="topic-pic"></div>
-          <span>社会热点</span>
-        </TopicItem>
-        <TopicItem>
-          <div className="topic-pic"></div>
-          <span>社会热点</span>
-        </TopicItem>
-        <TopicItem>
-          <div className="topic-pic"></div>
-          <span>社会热点</span>
-        </TopicItem>
-        <TopicItem>
-          <div className="topic-pic"></div>
-          <span>社会热点</span>
-        </TopicItem>
+        {
+          list.map((item) => {
+            return (
+              <TopicItem key={item.get('id')} imgURL={item.get('imgURL')}>
+                <div className="topic-pic"></div>
+                <span>{item.get('title')}</span>
+              </TopicItem>
+            )
+          })
+        }
       </TopicWrapper>
     )
   }
-}
+};
 
-export default Topic;
+const mapState = (state) => ({
+  list: state.getIn(['home', 'topicList'])
+})
+
+export default connect(mapState, null)(Topic);

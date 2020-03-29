@@ -109,6 +109,7 @@ export const SearchInfo = styled.div`
   width: 240px;
   padding: 0 20px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  background: #fff;
 `;
 
 export const SearchInfoTitle = styled.div`
@@ -125,7 +126,7 @@ export const SearchInfoSwitch = styled.div`
   .icon {
     margin-right: 3px;
     transition: all 0.3s linear;
-    &.active {
+    &.active {  
       transform-origin: center center;
       transform: rotate(360deg);
     }

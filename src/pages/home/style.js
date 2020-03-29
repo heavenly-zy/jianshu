@@ -44,7 +44,7 @@ export const TopicItem = styled.div`
   border: 1px solid #dcdcdc;
   border-radius: 4px;
   .topic-pic {
-    background-image: url(${require("../../statics/topic.png")});
+    background-image: url(${(props) => { return props.imgURL }});
     background-position: center center;
     background-size: contain;
     width: 32px;
