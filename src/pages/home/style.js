@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const HomeWrapper = styled.div`
-  overflow: hidden;
-  width: 960px;
+  display: flow-root;
+  width: 980px;
   margin: 0 auto;
 `
 
@@ -21,7 +21,6 @@ export const HomeLeft = styled.div`
 `
 
 export const HomeRight = styled.div`
-  width: 240px;
   float: right;
 `
 
@@ -85,3 +84,24 @@ export const ListInfo = styled.div`
   }
 `
 
+export const RecommendWrapper = styled.div`
+  margin: 30px 0;
+  width: 280px;
+`
+
+export const RecommendItem = styled.div`
+  width: 280px;
+  height: 50px;
+  margin: 5px 0;
+  background: url(${(props) => props.imgURL});
+  background-size: contain;
+`
+
+export const WriterWrapper = styled.div`
+  width: 280px;
+  border: 1px solid #dcdcdc;
+  border-radius: 3px;
+  height: 300px;
+  line-height: 300px;
+  text-align: center;
+`

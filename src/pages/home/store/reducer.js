@@ -26,6 +26,24 @@ const defaultState = fromJS({
       desc: '最近花了比较多时间打磨我的高效写作输出组合，用模板打破Markdown与富文本的藩篱，甚至最快可以1s排版微信公众号图文，这样就意味着可以花更少...',
       imgURL: require("../../../statics/topic1.png")
     }
+  ],
+  recommendList: [
+    {
+      id: 1,
+      imgURL: require("../../../statics/recommend1.png")
+    },
+    {
+      id: 2,
+      imgURL: require("../../../statics/recommend2.png")
+    },
+    {
+      id: 3,
+      imgURL: require("../../../statics/recommend3.png")
+    },
+    {
+      id: 4,
+      imgURL: require("../../../statics/recommend4.png")
+    },
   ]
 });
 
