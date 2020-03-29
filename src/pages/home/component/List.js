@@ -11,7 +11,7 @@ class List extends Component {
           list.map((item) => {
             return (
               <ListItem key={item.get('id')}>
-                <img className="pic" src={item.get('imgURL')} alt="" />
+                <img className="pic" src={require(`../../../${item.get('imgURL')}`)} alt="" />
                 <ListInfo>
                   <h3 className="title">{item.get('title')}</h3>
                   <p className="desc">{item.get('desc')}</p>
