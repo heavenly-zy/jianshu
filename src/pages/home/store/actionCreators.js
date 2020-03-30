@@ -38,3 +38,8 @@ export const getMoreList = (page) => {
       })
   }
 }
+
+export const toggleTopShow = (showScroll) => ({
+  type: actionType.TOGGLE_SCROLL_TOP,
+  showScroll
+})
