@@ -8,8 +8,8 @@ import Topic from './component/Topic';
 import List from './component/List';
 import Recommend from './component/Recommend';
 import Writer from './component/Writer';
-import axios from 'axios';
 import { connect } from 'react-redux';
+import { actionCreators } from './store';
 
 class Home extends Component {
   render() {
@@ -35,17 +35,7 @@ class Home extends Component {
 
 const mapDispatch = (dispatch) => ({ // 容器组件---逻辑
   changeHomeData() {
-    axios.get('/api/home.json')
-      .then((res) => {
-        const result = res.data.data;
-        const action = {
-          type: 'CHANGE_HOME_DATA',
-          topicList: result.topicList,
-          articleList: result.articleList,
-          recommendList: result.recommendList
-        }
-        dispatch(action)
-      })
+    dispatch(actionCreators.getHomeData())
   }
 })
 
