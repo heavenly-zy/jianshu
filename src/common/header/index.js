@@ -16,6 +16,7 @@ import {
 import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { actionCreators } from './store';
+import { Link } from 'react-router-dom';
 
 const showSearchInfo = (props) => {
   const { focused, list, mouseIn, currentPage, spinIconActive, totalPages, handleMouseEnter, handleMouseLeave, handleChangePage } = props;
@@ -55,7 +56,9 @@ const Header = (props) => {
   const { focused, list, handleInputFocus, handleInputBlur } = props
   return (
     <HeaderWrapper>
-      <Logo />
+      <Link to='/'>
+        <Logo />
+      </Link>
       <Nav>
         <NavItem className="left">首页</NavItem>
         <NavItem className="left">下载App</NavItem>
