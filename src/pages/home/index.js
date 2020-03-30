@@ -29,6 +29,12 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    this.props.changeHomeData()
+  }
+} // UI组件---视图
+
+const mapDispatch = (dispatch) => ({ // 容器组件---逻辑
+  changeHomeData() {
     axios.get('/api/home.json')
       .then((res) => {
         const result = res.data.data;
@@ -38,14 +44,8 @@ class Home extends Component {
           articleList: result.articleList,
           recommendList: result.recommendList
         }
-        this.props.changeHomeData(action)
+        dispatch(action)
       })
-  }
-}
-
-const mapDispatch = (dispatch) => ({
-  changeHomeData(action) {
-    dispatch(action);
   }
 })
 
