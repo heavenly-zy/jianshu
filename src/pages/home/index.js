@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   HomeWrapper,
   HomeLeft,
@@ -12,7 +12,9 @@ import { connect } from 'react-redux';
 import { actionCreators } from './store';
 import { BackTop } from './style';
 
-class Home extends Component {
+class Home extends PureComponent {
+  // PureComponent 相当于自己内部实现了一个 shouldComponentUpdate，因此使用 PureComponent 可以避免 render 函数重新渲染，从而提高性能
+  // 另外，使用 PureComponent 的前提是你使用了 immutable.js 来管理数据
   handleScrollTop() {
     window.scrollTo({
       left: 0,
