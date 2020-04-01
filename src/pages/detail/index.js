@@ -6,6 +6,7 @@ import {
 } from './style';
 import { connect } from 'react-redux';
 import { actionCreators } from './store';
+import { withRouter } from 'react-router-dom';
 
 class Detail extends PureComponent {
   render() {
@@ -37,5 +38,5 @@ const mapDispatch = (dispatch) => {
     }
   }
 }
-
-export default connect(mapState, mapDispatch)(Detail);
+// 被 withRouter 包裹的组件能够获取路由参数
+export default connect(mapState, mapDispatch)(withRouter(Detail));
