@@ -91,12 +91,14 @@ const Header = (props) => {
         </SearchWrapper>
       </Nav>
       <Addition>
-        <Button className="writting">
-          <svg className="icon">
-            <use xlinkHref="#icon-pen"></use>
-          </svg>
-          <span>写文章</span>
-        </Button>
+        <Link to='/write'>
+          <Button className="writting">
+            <svg className="icon">
+              <use xlinkHref="#icon-pen"></use>
+            </svg>
+            <span>写文章</span>
+          </Button>
+        </Link>
         <Button className="register">注册</Button>
       </Addition>
     </HeaderWrapper>
