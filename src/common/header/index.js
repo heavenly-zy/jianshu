@@ -17,6 +17,7 @@ import { CSSTransition } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { actionCreators } from './store';
 import { Link } from 'react-router-dom';
+import { actionCreators as loginActionCreators } from '../../pages/login/store';
 
 const showSearchInfo = (props) => {
   const { focused, list, mouseIn, currentPage, spinIconActive, totalPages, handleMouseEnter, handleMouseLeave, handleChangePage } = props;
@@ -53,7 +54,7 @@ const showSearchInfo = (props) => {
 }
 
 const Header = (props) => {
-  const { focused, list, handleInputFocus, handleInputBlur } = props
+  const { focused, list, loginStatus, logout, handleInputFocus, handleInputBlur } = props
   return (
     <HeaderWrapper>
       <Link to='/'>
@@ -62,7 +63,9 @@ const Header = (props) => {
       <Nav>
         <NavItem className="left">首页</NavItem>
         <NavItem className="left">下载App</NavItem>
-        <NavItem className="right">登录</NavItem>
+        {
+          loginStatus ? <NavItem className="right" onClick={logout}>退出</NavItem> : <Link to='/login'><NavItem className="right">登录</NavItem></Link>
+        }
         <NavItem className="right">
           <svg className="icon">
             <use xlinkHref="#icon-typeface"></use>
@@ -110,6 +113,7 @@ const mapStateToProps = (state) => { // store => props
     currentPage: state.getIn(['header', 'currentPage']),
     totalPages: state.getIn(['header', 'totalPages']),
     spinIconActive: state.getIn(['header', 'spinIconActive']),
+    loginStatus: state.getIn(['login', 'loginStatus'])
   }
 }
 const mapDispatchToProps = (dispatch) => { // 组件通过 dispatch 改变 store 中的数据
@@ -135,6 +139,9 @@ const mapDispatchToProps = (dispatch) => { // 组件通过 dispatch 改变 store
       } else {
         dispatch(actionCreators.changePage(0));
       }
+    },
+    logout() {
+      dispatch(loginActionCreators.logout())
     }
   }
 }
