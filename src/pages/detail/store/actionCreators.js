@@ -10,9 +10,9 @@ const changeDetail = (title, imgURL, content) => {
   }
 }
 
-export const getDetailData = () => {
+export const getDetailData = (routeId) => {
   return (dispatch) => {
-    axios.get('/api/detail.json')
+    axios.get(`/api/detail.json?=${routeId}`)
       .then((res) => {
         const result = res.data.data
         dispatch(changeDetail(result.title, result.imgURL, result.content))

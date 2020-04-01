@@ -18,12 +18,11 @@ class Detail extends PureComponent {
     )
   }
   componentDidMount() {
-    this.props.getDetailData()
+    this.props.getDetailData(this.props.match.params.id)
   }
 }
 
 const mapState = (state) => {
-  console.log(state)
   return {
     title: state.getIn(['detail', 'title']),
     imgURL: state.getIn(['detail', 'imgURL']),
@@ -33,8 +32,8 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    getDetailData() {
-      dispatch(actionCreators.getDetailData())
+    getDetailData(routeId) {
+      dispatch(actionCreators.getDetailData(routeId))
     }
   }
 }
